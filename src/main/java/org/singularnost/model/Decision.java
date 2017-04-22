@@ -5,6 +5,9 @@ import org.singularnost.model.enums.Direction;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -26,6 +29,8 @@ public class Decision {
     static final String DECISION_GEN = "decision_gen";
     static final String DECISION_SEQ = "decision_seq";
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = DECISION_GEN)
     private Long id;
 
     @OneToOne
