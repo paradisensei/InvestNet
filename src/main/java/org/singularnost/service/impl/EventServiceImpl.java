@@ -7,10 +7,8 @@ import org.singularnost.repository.EventRepository;
 import org.singularnost.repository.PredictionRepository;
 import org.singularnost.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +29,11 @@ public class EventServiceImpl implements EventService {
                             PredictionRepository predictionRepository) {
         this.eventRepository = eventRepository;
         this.predictionRepository = predictionRepository;
+    }
+
+    @Override
+    public Event getOne(long id) {
+        return eventRepository.findOne(id);
     }
 
     @Override

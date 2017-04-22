@@ -10,6 +10,15 @@ import javax.persistence.*;
 @SequenceGenerator(name = "prediction_gen", sequenceName = "prediction_seq", allocationSize = 1)
 public class Prediction {
 
+    public Prediction() {
+    }
+
+    public Prediction(User user, Event event, int prediction) {
+        this.user = user;
+        this.event = event;
+        this.prediction = prediction;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "prediction_gen")
     private Long id;

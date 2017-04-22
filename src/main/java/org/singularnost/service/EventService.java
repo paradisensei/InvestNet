@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface EventService {
 
+    Event getOne(long id);
+
     List<Event> getActive(User user);
 
 }

@@ -10,7 +10,7 @@
             <column name="id" type="int8"/>
             <column name="company" type="varchar(50)"/>
             <column name="direction" type="varchar(10)"/>
-            <column name="closeDate" type="int8"/>
+            <column name="close_date" type="int8"/>
         </createTable>
     </changeSet>
 
@@ -26,7 +26,7 @@
     <changeSet id="3" author="paradisensei">
         <addNotNullConstraint tableName="event" columnName="company"/>
         <addNotNullConstraint tableName="event" columnName="direction"/>
-        <addNotNullConstraint tableName="event" columnName="closeDate"/>
+        <addNotNullConstraint tableName="event" columnName="close_date"/>
     </changeSet>
 
 </databaseChangeLog>
