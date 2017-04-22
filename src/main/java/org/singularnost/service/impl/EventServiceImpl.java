@@ -7,8 +7,6 @@ import org.singularnost.repository.EventRepository;
 import org.singularnost.repository.PredictionRepository;
 import org.singularnost.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,6 +42,11 @@ public class EventServiceImpl implements EventService {
                 .stream().map(Prediction::getEvent).collect(Collectors.toSet());
         allEvents.removeAll(userEvents);
         return allEvents;
+    }
+
+    @Override
+    public List<Event> getPassed() {
+        return eventRepository.findByCloseDateLessThan(System.currentTimeMillis());
     }
 
 }

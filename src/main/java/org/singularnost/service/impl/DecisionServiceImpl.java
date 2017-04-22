@@ -4,6 +4,7 @@ import org.singularnost.model.Decision;
 import org.singularnost.model.Event;
 import org.singularnost.model.Prediction;
 import org.singularnost.model.enums.Direction;
+import org.singularnost.repository.DecisionRepository;
 import org.singularnost.service.DecisionService;
 import org.singularnost.service.PredictionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,15 @@ public class DecisionServiceImpl implements DecisionService {
 
     private static final int M = 2;
 
+    private final PredictionService predictionService;
+    private final DecisionRepository decisionRepository;
+
     @Autowired
-    private PredictionService predictionService;
+    public DecisionServiceImpl(PredictionService predictionService,
+                               DecisionRepository decisionRepository) {
+        this.predictionService = predictionService;
+        this.decisionRepository = decisionRepository;
+    }
 
     @Override
     public Decision getFinalPredictionForEvent(Event event) {
@@ -53,6 +61,11 @@ public class DecisionServiceImpl implements DecisionService {
 
         return decision;
 
+    }
+
+    @Override
+    public void add(Decision decision) {
+        decisionRepository.save(decision);
     }
 
 }

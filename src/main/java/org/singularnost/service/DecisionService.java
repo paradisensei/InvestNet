@@ -10,4 +10,6 @@ public interface DecisionService {
 
     Decision getFinalPredictionForEvent(Event event);
 
+    void add(Decision decision);
+
 }

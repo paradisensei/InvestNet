@@ -14,4 +14,6 @@ public interface EventService {
 
     List<Event> getActive(User user);
 
+    List<Event> getPassed();
+
 }
