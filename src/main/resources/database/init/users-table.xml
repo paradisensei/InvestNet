@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="0" author="paradisensei">
+        <createTable tableName="users">
+            <column name="id" type="int8"/>
+            <column name="client_token" type="varchar(250)"/>
+            <column name="name" type="varchar(50)"/>
+            <column name="email" type="varchar(50)"/>
+            <column name="company" type="varchar(50)"/>
+            <column name="location" type="varchar(50)"/>
+            <column name="bio" type="text"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1" author="paradisensei">
+        <addPrimaryKey tableName="users" columnNames="id"/>
+    </changeSet>
+
+    <changeSet id="2" author="alishev.neil">
+        <createIndex indexName="users_client_token_idx" tableName="users" unique="true">
+            <column name="client_token" type="varchar(100)"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="3" author="paradisensei">
+        <createSequence sequenceName="users_seq"
+                        schemaName="public" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="4" author="paradisensei">
+        <addNotNullConstraint tableName="users" columnName="client_token"/>
+    </changeSet>
+
+</databaseChangeLog>

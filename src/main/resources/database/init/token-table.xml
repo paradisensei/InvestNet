@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="0" author="paradisensei">
+        <createTable tableName="token">
+            <column name="id" type="int8"/>
+            <column name="social_id" type="int8"/>
+            <column name="access_token" type="varchar(250)"/>
+            <column name="expires_in" type="int"/>
+            <column name="birth_date" type="timestamp"/>
+            <column name="user_id" type="int8"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1" author="paradisensei">
+        <addPrimaryKey tableName="token" columnNames="id"/>
+    </changeSet>
+
+    <changeSet id="2" author="paradisensei">
+        <addForeignKeyConstraint baseTableName="token" baseColumnNames="user_id"
+                                 constraintName="token_user_fk" referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="3" author="paradisensei">
+        <createSequence sequenceName="token_seq"
+                        schemaName="public" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="4" author="paradisensei">
+        <addNotNullConstraint tableName="token" columnName="social_id"/>
+        <addNotNullConstraint tableName="token" columnName="access_token"/>
+        <addNotNullConstraint tableName="token" columnName="expires_in"/>
+        <addNotNullConstraint tableName="token" columnName="birth_date"/>
+        <addNotNullConstraint tableName="token" columnName="user_id"/>
+    </changeSet>
+
+</databaseChangeLog>
