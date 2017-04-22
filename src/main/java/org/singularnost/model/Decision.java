@@ -5,6 +5,7 @@ import org.singularnost.model.enums.Direction;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -28,6 +29,7 @@ public class Decision {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "event_id")
     private Event event;
 
     @Enumerated(EnumType.STRING)
