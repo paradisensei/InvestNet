@@ -9,5 +9,6 @@
     <include file="init/token-table.xml" relativeToChangelogFile="true"/>
     <include file="init/event-table.xml" relativeToChangelogFile="true"/>
     <include file="init/prediction-table.xml" relativeToChangelogFile="true"/>
+    <include file="init/decision-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

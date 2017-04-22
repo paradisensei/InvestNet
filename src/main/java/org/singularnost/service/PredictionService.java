@@ -12,6 +12,4 @@ public interface PredictionService {
 
     List<Prediction> findByEvent(Event event);
 
-    Prediction getFinalPredictionForEvent(Event event);
-
 }
