@@ -38,7 +38,7 @@ public class EventServiceImpl implements EventService {
     public List<Event> getActive(User user) {
         List<Event> allEvents = eventRepository
                 .findByCloseDateGreaterThan(System.currentTimeMillis());
-        Set<Event> userEvents = predictionRepository.findByUser(user.getId())
+        Set<Event> userEvents = predictionRepository.findByUser(user)
                 .stream().map(Prediction::getEvent).collect(Collectors.toSet());
         allEvents.removeAll(userEvents);
         return allEvents;
