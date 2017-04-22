@@ -14,6 +14,7 @@
             <column name="company" type="varchar(50)"/>
             <column name="location" type="varchar(50)"/>
             <column name="bio" type="text"/>
+            <column name="weight" type="int8"/>
         </createTable>
     </changeSet>
 
@@ -34,6 +35,7 @@
 
     <changeSet id="4" author="paradisensei">
         <addNotNullConstraint tableName="users" columnName="client_token"/>
+        <addNotNullConstraint tableName="users" columnName="weight"/>
     </changeSet>
 
 </databaseChangeLog>

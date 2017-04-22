@@ -21,6 +21,7 @@ public class User {
         company = gitHubUser.getCompany();
         location = gitHubUser.getLocation();
         bio = gitHubUser.getBio();
+        weight = 0;
     }
 
     @Id
@@ -39,6 +40,8 @@ public class User {
     private String location;
 
     private String bio;
+
+    private int weight;
 
     public Long getId() {
         return id;
@@ -96,4 +99,11 @@ public class User {
         this.bio = bio;
     }
 
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 }
