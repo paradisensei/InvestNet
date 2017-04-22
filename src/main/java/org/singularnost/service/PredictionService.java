@@ -2,6 +2,7 @@ package org.singularnost.service;
 
 import org.singularnost.model.Event;
 import org.singularnost.model.Prediction;
+import org.singularnost.model.User;
 
 import java.util.List;
 
@@ -11,5 +12,7 @@ import java.util.List;
 public interface PredictionService {
 
     List<Prediction> findByEvent(Event event);
+
+    void add(User user, Event event, int prediction);
 
 }

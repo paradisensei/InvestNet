@@ -22,6 +22,7 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private Direction direction;
 
+    @Column(name = "close_date")
     private long closeDate;
 
     public Long getId() {
