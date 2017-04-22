@@ -27,7 +27,7 @@ public class CheckEventsTask {
 
     // fixedRate = 1 day
     @Scheduled(fixedRate = 86400000)
-    public void checkEvents() {
+    public void processPassedEvents() {
         eventService.getPassed().stream()
                 .filter(event -> decisionRepository.findByEvent(event) == null)
                 .map(decisionService::getFinalPredictionForEvent)
