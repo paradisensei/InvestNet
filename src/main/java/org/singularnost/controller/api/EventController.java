@@ -46,7 +46,7 @@ public class EventController {
         return new ApiResponse<>(eventService.getActive(user));
     }
 
-    @RequestMapping(value = "/{id}/predictions", method = RequestMethod.POST)
+    @RequestMapping(value = "/{eventId}/predictions")
     public void predict(@PathVariable long eventId,
                         @RequestParam("token") String token,
                         @RequestParam("prediction") int prediction) {
