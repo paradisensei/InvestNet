@@ -17,4 +17,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findByIdNotIn(Collection<Long> events);
 
+    List<Event> findByCloseDateLessThan(long closeDate);
 }

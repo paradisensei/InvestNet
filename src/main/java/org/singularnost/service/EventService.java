@@ -12,6 +12,4 @@ public interface EventService {
 
     List<Event> getActive(User user);
 
-    void checkEvent();
-
 }

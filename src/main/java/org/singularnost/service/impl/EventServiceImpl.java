@@ -20,8 +20,6 @@ import java.util.stream.Collectors;
 /**
  * @author Aidar Shaifutdinov.
  */
-@EnableAsync
-@EnableScheduling
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -43,13 +41,6 @@ public class EventServiceImpl implements EventService {
                 .stream().map(Prediction::getEvent).collect(Collectors.toSet());
         allEvents.removeAll(userEvents);
         return allEvents;
-    }
-
-//    @Scheduled(fixedDelay = )
-//    @Async
-    @Override
-    public void checkEvent() {
-
     }
 
 }
