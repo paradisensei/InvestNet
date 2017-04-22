@@ -32,9 +32,4 @@ public class CoreConfig {
         return new ThreadPoolTaskScheduler();
     }
 
-    @Async
-    public void checkEvents() {
-
-    }
-
 }
