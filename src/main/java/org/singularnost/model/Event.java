@@ -3,6 +3,7 @@ package org.singularnost.model;
 import org.singularnost.model.enums.Direction;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author Aidar Shaifutdinov.
@@ -54,4 +55,18 @@ public class Event {
     public void setCloseDate(long closeDate) {
         this.closeDate = closeDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return Objects.equals(id, event.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

@@ -12,5 +12,9 @@ import java.util.List;
  */
 @Repository
 public interface PredictionRepository extends JpaRepository<Prediction, Long> {
+
     List<Prediction> findByEvent(Event event);
+
+    List<Prediction> findByUser(long user);
+
 }
