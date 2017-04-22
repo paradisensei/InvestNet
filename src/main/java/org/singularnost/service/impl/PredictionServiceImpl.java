@@ -1,5 +1,6 @@
 package org.singularnost.service.impl;
 
+import org.singularnost.model.Decision;
 import org.singularnost.model.Event;
 import org.singularnost.model.Prediction;
 import org.singularnost.repository.PredictionRepository;
@@ -15,8 +16,6 @@ import java.util.List;
 @Service
 public class PredictionServiceImpl implements PredictionService {
 
-    private static final int M = 2;
-
     @Autowired
     private
     PredictionRepository predictionRepository;
@@ -26,14 +25,4 @@ public class PredictionServiceImpl implements PredictionService {
         return predictionRepository.findByEvent(event);
     }
 
-    @Override
-    public Prediction getFinalPredictionForEvent(Event event) {
-        List<Prediction> predictions = findByEvent(event);
-        predictions.stream().map(prediction -> {
-            int percent = prediction.getPrediction();
-            int userWeight = prediction.getUser().getWeight();
-            return 0;
-        }).reduce((p1, p2) -> (int) p1 + (int) p2);
-        return new Prediction();
-    }
 }
