@@ -86,6 +86,8 @@ plt.hist(users, bins='auto')
 plt.title("User's weights")
 plt.show()
 
+plt.cla()
+
 # It's possible to animate weights construction
 
 # number_of_frames = 5
@@ -121,7 +123,19 @@ print(decisions)
 print("All trades count = " + str(all_trades))
 print("Successful trades count = " + str(profit_trades))
 
-# count profit
-print(profit_decisions)
+plt.autoscale(enable=True, axis='both', tight=None)
 
-# invest all people's money here.
+event_count = 1
+# invest all people's money here. Count profit.
+for profit_decision in profit_decisions:
+    abs_delta = abs(profit_decision)
+
+    for i in range(len(users_money)):
+        users_money[i] += users_money[i] + users_money[i] * abs_delta
+
+    plt.scatter(event_count, int(sum(users_money)) / 1000000)
+    plt.pause(1)
+
+    event_count += 1
+
+plt.show()
