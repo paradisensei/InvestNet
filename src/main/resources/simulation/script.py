@@ -4,7 +4,7 @@ import random
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+import matplotlib.animation as animation1
 from matplotlib import style
 
 
@@ -100,8 +100,10 @@ for i in range(count):
 
 fig = plt.figure()
 
-animation = animation.FuncAnimation(fig, weights_generator, count, fargs=(weights_graph_arr,), repeat=False, interval=1000)
+animation = animation1.FuncAnimation(fig, weights_generator, count, fargs=(weights_graph_arr,), repeat=False, interval=1000)
 plt.show()
+
+plt.clf()
 
 # count decision trades with regard to threshold: 50 +- offset (%)
 
@@ -173,5 +175,5 @@ def animate(i):
     ax1.plot(xs, ys)
 
 
-ani = animation.FuncAnimation(fig, animate, interval=500)
+ani = animation1.FuncAnimation(fig, animate, interval=500)
 plt.show()
