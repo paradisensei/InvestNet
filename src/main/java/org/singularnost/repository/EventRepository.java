@@ -14,5 +14,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findByCloseDateGreaterThan(long closeDate);
 
-    List<Event> findByCloseDateLessThan(long closeDate);
+    List<Event> findByCloseDateGreaterThanAndLessThan(long begin, long closeDate);
 }

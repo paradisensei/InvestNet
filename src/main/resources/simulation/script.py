@@ -30,17 +30,24 @@ count = events.__len__()
 users_events = [[0 for e in range(count)] for u in range(1000)]
 
 # fill stupid
-stupid = int(users_events.__len__() / 10)
+stupid = int(users_events.__len__() / 7)
 for i in range(stupid):
     for j in range(count):
-        pred = random.randint(0, 100)
+        pred = 0
+        if random.random() > 0.5:
+            pred = random.randint(0, 100)
+        else:
+            if (events[j] < 0):
+                pred = random.randint(51, 100)
+            else:
+                pred = random.randint(0, 49)
         users_events[i][j] = pred if pred != 50 else random.randint(0, 100)
 
 # fill others
 sure_percent = 1
 sure = int(round(count * (sure_percent / 100)))
 # percent of known event results from 1(%) to upper_bound(%)
-upper_bound = 20  # see previous comment
+upper_bound = 50  # see previous comment
 step = int((users_events.__len__() - stupid) / upper_bound)
 step_iter = 0
 for i in range(stupid, users_events.__len__()):
@@ -48,9 +55,9 @@ for i in range(stupid, users_events.__len__()):
     for j in range(count):
         if sure_idx.__contains__(j):
             if events[j] < 0:
-                users_events[i][j] = random.randint(0, 49)
+                users_events[i][j] = random.randint(0, 30)
             else:
-                users_events[i][j] = random.randint(51, 100)
+                users_events[i][j] = random.randint(70, 100)
         else:
             pred = random.randint(0, 100)
             users_events[i][j] = pred if pred != 50 else random.randint(0, 100)
@@ -93,51 +100,44 @@ for i in range(count):
 
 fig = plt.figure()
 
-animation = animation.FuncAnimation(fig, weights_generator, count, fargs=(weights_graph_arr,), repeat=False)
+animation = animation.FuncAnimation(fig, weights_generator, count, fargs=(weights_graph_arr,), repeat=False, interval=1000)
 plt.show()
 
 # count decision trades with regard to threshold: 50 +- offset (%)
 
-offset = 5
+f = open('events.txt', 'w')
+f.close()
+print("Users money before = " + str(sum(users_money)))
+
+offset = 10
 all_trades = 0
 profit_trades = 0
-profit_decisions = []
+loss_trades = 0
 for i in range(decisions.__len__()):
     decision = decisions[i]
     if decision == 50 or decision < 50 < decision + offset or decision > 50 > decision - offset:
         continue
 
     all_trades += 1
+    multiplicator = 1
     if events[i] < 0 and decision < 50 or events[i] > 0 and decision > 50:
         profit_trades += 1
-        profit_decisions.append(events[i])
-
+        multiplicator += abs(events[i])
+    else:
+        loss_trades += 1
+        multiplicator -= abs(events[i])
+    for i in range(len(users_money)):
+        users_money[i] *= multiplicator
+    f = open('events.txt', 'a')
+    f.write(str(int(sum(users_money))) + '\n')
 # visualise results
 print(decisions)
 print("All trades count = " + str(all_trades))
 print("Successful trades count = " + str(profit_trades))
+print("Loss trades count = " + str(loss_trades))
 
 # plt.autoscale(enable=True, axis='both', tight=None)
-event_count = 1
 
-f = open('events.txt', 'w')
-f.close()
-print("Users money before = " + str(sum(users_money)))
-# invest all people's money here. Count profit.
-for profit_decision in profit_decisions:
-    abs_delta = 1 + abs(profit_decision)
-
-    for i in range(len(users_money)):
-        users_money[i] *= abs_delta
-    f = open('events.txt', 'a')
-    f.write(str(int(sum(users_money))) + '\n')
-
-    # plt.scatter(event_count, int(sum(users_money)))
-    # plt.pause(1)
-
-    event_count += 1
-# plt.show()
-# plt.close()
 print("Users money after = " + str(sum(users_money)))
 
 style.use('fivethirtyeight')
@@ -147,8 +147,6 @@ ax1 = fig.add_subplot(1, 1, 1)
 
 data = open('events.txt', 'r').read().split('\n')
 data = data[:len(data) - 1]
-
-print(data)
 
 
 def animate(i):
