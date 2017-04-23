@@ -9,7 +9,8 @@ import matplotlib.animation as animation
 
 def add_events(data, csv):
     cur_data = pd.read_csv(csv)
-    events = np.asarray(cur_data['Close'] - cur_data['Open'], dtype='|S6').astype(np.float)
+    value = (cur_data['Close'] - cur_data['Open']) / cur_data['Open']
+    events = np.asarray(value, dtype='|S6').astype(np.float)
     return np.concatenate([data, events])
 
 
@@ -32,8 +33,9 @@ for i in range(stupid):
 # fill others
 sure_percent = 1
 sure = int(round(count * (sure_percent / 100)))
-# TODO bug here with the divisor
-step = int((users_events.__len__() - stupid) / 50)
+# percent of known event results from 1(%) to upper_bound(%)
+upper_bound = 20  # see previous comment
+step = int((users_events.__len__() - stupid) / upper_bound)
 step_iter = 0
 for i in range(stupid, users_events.__len__()):
     sure_idx = random.sample(range(count), sure)
@@ -55,11 +57,8 @@ for i in range(stupid, users_events.__len__()):
 # user weights
 users = [1 for i in range(users_events.__len__())]
 
-# users money
-users_money = []
-
-for i in range(len(users)):
-    users_money.append(random.randint(1, 50))
+# user money
+users_money = [random.randint(1, 50) for i in range(len(users))]
 
 # decisions
 decisions = [0 for i in range(count)]
@@ -82,11 +81,11 @@ for i in range(count):
         else:
             users[j] += 50 - users_events[j][i]
 
-plt.hist(users, bins='auto')
-plt.title("User's weights")
-plt.show()
-
-plt.cla()
+# plt.hist(users, bins='auto')
+# plt.title("User's weights")
+# plt.show()
+#
+# plt.cla()
 
 # It's possible to animate weights construction
 
@@ -104,14 +103,13 @@ plt.cla()
 
 # count decision trades with regard to threshold: 50 +- offset (%)
 
-offset = 10
+offset = 5
 all_trades = 0
 profit_trades = 0
 profit_decisions = []
 for i in range(decisions.__len__()):
     decision = decisions[i]
-    # decision is trivial
-    if decision < 50 < decision + offset or decision > 50 > decision - offset:
+    if decision == 50 or decision < 50 < decision + offset or decision > 50 > decision - offset:
         continue
 
     all_trades += 1
@@ -125,19 +123,20 @@ print("All trades count = " + str(all_trades))
 print("Successful trades count = " + str(profit_trades))
 
 plt.autoscale(enable=True, axis='both', tight=None)
-
 event_count = 1
 
+print("Users money before = " + str(sum(users_money)))
 # invest all people's money here. Count profit.
 for profit_decision in profit_decisions:
-    abs_delta = abs(profit_decision)
+    abs_delta = 1 + abs(profit_decision)
 
     for i in range(len(users_money)):
-        users_money[i] += users_money[i] + users_money[i] * abs_delta
+        users_money[i] *= abs_delta
 
-    plt.scatter(event_count, int(sum(users_money)) / 100000)
+    plt.scatter(event_count, int(sum(users_money)))
     plt.pause(1)
 
     event_count += 1
-
 plt.show()
+plt.close()
+print("Users money after = " + str(sum(users_money)))
