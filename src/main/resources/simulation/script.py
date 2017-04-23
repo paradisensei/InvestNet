@@ -123,7 +123,7 @@ print(decisions)
 print("All trades count = " + str(all_trades))
 print("Successful trades count = " + str(profit_trades))
 
-plt.autoscale(enable=True, axis='both', tight=None)
+# plt.autoscale(enable=True, axis='both', tight=None)
 event_count = 1
 
 f = open('events.txt', 'w')
@@ -138,12 +138,12 @@ for profit_decision in profit_decisions:
     f = open('events.txt', 'a')
     f.write(str(int(sum(users_money)))+'\n')
 
-    plt.scatter(event_count, int(sum(users_money)))
-    plt.pause(1)
+    # plt.scatter(event_count, int(sum(users_money)))
+    # plt.pause(1)
 
     event_count += 1
-plt.show()
-plt.close()
+# plt.show()
+# plt.close()
 print("Users money after = " + str(sum(users_money)))
 
 style.use('fivethirtyeight')
