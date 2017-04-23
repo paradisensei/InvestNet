@@ -160,7 +160,8 @@ print(data)
 def animate(i):
     # graph_data = open('example.txt', 'r').read()
     global data
-    graph_data = data[1:i]
+    if i > len(data):
+        i = len(data)
     # lines = graph_data.split('\n')
     xs = []
     ys = []
