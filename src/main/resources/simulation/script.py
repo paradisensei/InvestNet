@@ -3,12 +3,15 @@ from __future__ import division
 import random
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 
 def add_events(data, csv):
     cur_data = pd.read_csv(csv)
     events = np.asarray(cur_data['Close'] - cur_data['Open'], dtype='|S6').astype(np.float)
     return np.concatenate([data, events])
+
 
 # TODO sort events on date
 # read data for few companies
@@ -52,6 +55,12 @@ for i in range(stupid, users_events.__len__()):
 # user weights
 users = [1 for i in range(users_events.__len__())]
 
+# users money
+users_money = []
+
+for i in range(len(users)):
+    users_money.append(1 + i)
+
 # decisions
 decisions = [0 for i in range(count)]
 
@@ -59,6 +68,7 @@ decisions = [0 for i in range(count)]
 for i in range(count):
     prod = 0
     weight_sum = 0
+
     for j in range(users.__len__()):
         pred = users_events[j][i]
         weight = users[j]
@@ -72,20 +82,46 @@ for i in range(count):
         else:
             users[j] += 50 - users_events[j][i]
 
+plt.hist(users, bins='auto')
+plt.title("User's weights")
+plt.show()
+
+# It's possible to animate weights construction
+
+# number_of_frames = 5
+#
+# def update_hist(num, data):
+#     plt.cla()
+#     plt.hist(data)
+#
+# fig = plt.figure()
+# hist = plt.hist(users)
+#
+# animation = animation.FuncAnimation(fig, update_hist, number_of_frames, fargs=(users,), repeat=False)
+# plt.show()
+
 # count decision trades with regard to threshold: 50 +- offset (%)
 offset = 10
 all_trades = 0
 profit_trades = 0
+profit_decisions = []
 for i in range(decisions.__len__()):
     decision = decisions[i]
+    # decision is trivial
     if decision < 50 < decision + offset or decision > 50 > decision - offset:
         continue
+
     all_trades += 1
     if events[i] < 0 and decision < 50 or events[i] > 0 and decision > 50:
         profit_trades += 1
-
+        profit_decisions.append(events[i])
 
 # visualise results
 print(decisions)
 print("All trades count = " + str(all_trades))
 print("Successful trades count = " + str(profit_trades))
+
+# count profit
+print(profit_decisions)
+
+# invest all people's money here.
