@@ -126,6 +126,8 @@ print("Successful trades count = " + str(profit_trades))
 plt.autoscale(enable=True, axis='both', tight=None)
 event_count = 1
 
+f = open('events.txt', 'w')
+f.close()
 print("Users money before = " + str(sum(users_money)))
 # invest all people's money here. Count profit.
 for profit_decision in profit_decisions:
