@@ -59,7 +59,7 @@ users = [1 for i in range(users_events.__len__())]
 users_money = []
 
 for i in range(len(users)):
-    users_money.append(1 + i)
+    users_money.append(random.randint(1, 50))
 
 # decisions
 decisions = [0 for i in range(count)]
@@ -103,6 +103,7 @@ plt.cla()
 # plt.show()
 
 # count decision trades with regard to threshold: 50 +- offset (%)
+
 offset = 10
 all_trades = 0
 profit_trades = 0
@@ -126,6 +127,7 @@ print("Successful trades count = " + str(profit_trades))
 plt.autoscale(enable=True, axis='both', tight=None)
 
 event_count = 1
+
 # invest all people's money here. Count profit.
 for profit_decision in profit_decisions:
     abs_delta = abs(profit_decision)
@@ -133,7 +135,7 @@ for profit_decision in profit_decisions:
     for i in range(len(users_money)):
         users_money[i] += users_money[i] + users_money[i] * abs_delta
 
-    plt.scatter(event_count, int(sum(users_money)) / 1000000)
+    plt.scatter(event_count, int(sum(users_money)) / 100000)
     plt.pause(1)
 
     event_count += 1
