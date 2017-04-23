@@ -44,9 +44,11 @@ public class CheckEventsTask {
                 .filter(event -> decisionRepository.findByEvent(event) == null)
                 .forEach(event -> {
                     Decision decision = decisionService.getFinalPredictionForEvent(event);
+                    decisionService.add(decision);
                     List<Prediction> predictions = predictionService.findByEvent(event);
                     predictions.forEach(prediction -> {
                         User user = prediction.getUser();
+                        //TODO add decision check
                         if (decision.getPrediction() > 50) {
                             user.setWeight(user.getWeight() - 50 + prediction.getPrediction());
                         } else {
