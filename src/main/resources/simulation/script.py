@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from matplotlib import style
 
 
 def add_events(data, csv):
@@ -125,6 +126,8 @@ print("Successful trades count = " + str(profit_trades))
 plt.autoscale(enable=True, axis='both', tight=None)
 event_count = 1
 
+f = open('events.txt', 'w')
+f.close()
 print("Users money before = " + str(sum(users_money)))
 # invest all people's money here. Count profit.
 for profit_decision in profit_decisions:
@@ -132,6 +135,8 @@ for profit_decision in profit_decisions:
 
     for i in range(len(users_money)):
         users_money[i] *= abs_delta
+    f = open('events.txt', 'a')
+    f.write(str(int(sum(users_money)))+'\n')
 
     plt.scatter(event_count, int(sum(users_money)))
     plt.pause(1)
@@ -140,3 +145,40 @@ for profit_decision in profit_decisions:
 plt.show()
 plt.close()
 print("Users money after = " + str(sum(users_money)))
+
+style.use('fivethirtyeight')
+
+fig = plt.figure()
+ax1 = fig.add_subplot(1, 1, 1)
+
+data = open('events.txt', 'r').read().split('\n')
+data = data[:len(data) - 1]
+
+print(data)
+
+
+def animate(i):
+    # graph_data = open('example.txt', 'r').read()
+    global data
+    graph_data = data[1:i]
+    # lines = graph_data.split('\n')
+    xs = []
+    ys = []
+    # for line in lines:
+    #     if len(line) > 1:
+    #         x, y = line.split(',')
+    #         xs.append(x)
+    #         ys.append(y)
+
+    for k in range(i):
+        xs.append(k)
+        ys.append(data[k])
+
+    ax1.clear()
+    ax1.set_ylim(20000, 40000)
+    ax1.set_xlim(0, len(data))
+    ax1.plot(xs, ys)
+
+
+ani = animation.FuncAnimation(fig, animate, interval=500)
+plt.show()
