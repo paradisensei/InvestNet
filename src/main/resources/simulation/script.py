@@ -49,24 +49,17 @@ count = events.__len__()
 users_events = [[0 for e in range(count)] for u in range(1000)]
 
 # fill stupid
-stupid = int(users_events.__len__() / 7)
+stupid = int(users_events.__len__() / 10)
 for i in range(stupid):
     for j in range(count):
-        pred = 0
-        if random.random() > 0.5:
-            pred = random.randint(0, 100)
-        else:
-            if (events[j] < 0):
-                pred = random.randint(51, 100)
-            else:
-                pred = random.randint(0, 49)
+        pred = random.randint(0, 100)
         users_events[i][j] = pred if pred != 50 else random.randint(0, 100)
 
 # fill others
-sure_percent = 1
+sure_percent = 0.07
 sure = int(round(count * (sure_percent / 100)))
 # percent of known event results from 1(%) to upper_bound(%)
-upper_bound = 50  # see previous comment
+upper_bound = 1.9  # see previous comment
 step = int((users_events.__len__() - stupid) / upper_bound)
 step_iter = 0
 for i in range(stupid, users_events.__len__()):
@@ -74,9 +67,9 @@ for i in range(stupid, users_events.__len__()):
     for j in range(count):
         if sure_idx.__contains__(j):
             if events[j] < 0:
-                users_events[i][j] = random.randint(0, 30)
+                users_events[i][j] = random.randint(0, 49)
             else:
-                users_events[i][j] = random.randint(70, 100)
+                users_events[i][j] = random.randint(51, 100)
         else:
             pred = random.randint(0, 100)
             users_events[i][j] = pred if pred != 50 else random.randint(0, 100)
@@ -119,10 +112,8 @@ for i in range(count):
 
 fig = plt.figure()
 
-animation = animation1.FuncAnimation(fig, weights_generator, count, fargs=(weights_graph_arr,), repeat=False, interval=1000)
+animation = animation1.FuncAnimation(fig, weights_generator, count, fargs=(weights_graph_arr,), repeat=False, interval=1)
 plt.show()
-
-plt.clf()
 
 # count decision trades with regard to threshold: 50 +- offset (%)
 
@@ -130,7 +121,7 @@ f = open('events.txt', 'w')
 f.close()
 print("Users money before = " + str(sum(users_money)))
 
-offset = 10
+offset = 0
 all_trades = 0
 profit_trades = 0
 loss_trades = 0
@@ -189,10 +180,10 @@ def animate(i):
         ys.append(data[k])
 
     ax1.clear()
-    ax1.set_ylim(20000, 40000)
+    ax1.set_ylim(10000, 150000)
     ax1.set_xlim(0, len(data))
     ax1.plot(xs, ys)
 
 
-ani = animation1.FuncAnimation(fig, animate, interval=500)
+ani = animation1.FuncAnimation(fig, animate, interval=5)
 plt.show()
