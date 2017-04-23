@@ -15,6 +15,11 @@ def add_events(data, csv):
     return np.concatenate([data, events])
 
 
+def weights_generator(num, weights_graph_arr):
+    plt.cla()
+    plt.hist(weights_graph_arr[num])
+
+
 # TODO sort events on date
 # read data for few companies
 events = add_events([], './data/PayPal.csv')
@@ -90,6 +95,8 @@ users_money = [random.randint(1, 50) for i in range(len(users))]
 # decisions
 decisions = [0 for i in range(count)]
 
+weights_graph_arr = []
+
 # run simulation
 for i in range(count):
     prod = 0
@@ -108,25 +115,12 @@ for i in range(count):
         else:
             users[j] += 50 - users_events[j][i]
 
-# plt.hist(users, bins='auto')
-# plt.title("User's weights")
-# plt.show()
-#
-# plt.cla()
+    weights_graph_arr.append(list(users))
 
-# It's possible to animate weights construction
+fig = plt.figure()
 
-# number_of_frames = 5
-#
-# def update_hist(num, data):
-#     plt.cla()
-#     plt.hist(data)
-#
-# fig = plt.figure()
-# hist = plt.hist(users)
-#
-# animation = animation.FuncAnimation(fig, update_hist, number_of_frames, fargs=(users,), repeat=False)
-# plt.show()
+animation = animation.FuncAnimation(fig, weights_generator, count, fargs=(weights_graph_arr,), repeat=False, interval=1000)
+plt.show()
 
 # count decision trades with regard to threshold: 50 +- offset (%)
 
@@ -172,6 +166,7 @@ ax1 = fig.add_subplot(1, 1, 1)
 
 data = open('events.txt', 'r').read().split('\n')
 data = data[:len(data) - 1]
+
 
 def animate(i):
     # graph_data = open('example.txt', 'r').read()
