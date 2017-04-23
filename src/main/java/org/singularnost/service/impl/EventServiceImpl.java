@@ -47,7 +47,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<Event> getPassed() {
         return eventRepository
-                .findByCloseDateGreaterThanAndLessThan(
+                .findByCloseDateGreaterThanAndCloseDateLessThan(
                         System.currentTimeMillis() - 86400000, System.currentTimeMillis());
     }
 
