@@ -11,6 +11,8 @@
             <column name="company" type="varchar(50)"/>
             <column name="direction" type="varchar(10)"/>
             <column name="close_date" type="int8"/>
+            <column name="title" type="varchar(250)"/>
+            <column name="image_url" type="varchar(250)"/>
         </createTable>
     </changeSet>
 
@@ -27,6 +29,7 @@
         <addNotNullConstraint tableName="event" columnName="company"/>
         <addNotNullConstraint tableName="event" columnName="direction"/>
         <addNotNullConstraint tableName="event" columnName="close_date"/>
+        <addNotNullConstraint tableName="event" columnName="image_url"/>
     </changeSet>
 
 </databaseChangeLog>
