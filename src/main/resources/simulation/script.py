@@ -10,14 +10,14 @@ def add_events(data, csv):
     events = np.asarray(cur_data['Close'] - cur_data['Open'], dtype='|S6').astype(np.float)
     return np.concatenate([data, events])
 
-
+# TODO sort events on date
 # read data for few companies
 events = add_events([], './data/PayPal.csv')
 events = add_events(events, './data/Apple.csv')
 count = events.__len__()
 
 # users & events matrix
-users_events = [[0 for e in range(count)] for u in range(100)]
+users_events = [[0 for e in range(count)] for u in range(1000)]
 
 # fill stupid
 stupid = int(users_events.__len__() / 10)
@@ -29,6 +29,7 @@ for i in range(stupid):
 # fill others
 sure_percent = 1
 sure = int(round(count * (sure_percent / 100)))
+# TODO bug here with the divisor
 step = int((users_events.__len__() - stupid) / 50)
 step_iter = 0
 for i in range(stupid, users_events.__len__()):
@@ -71,6 +72,20 @@ for i in range(count):
         else:
             users[j] += 50 - users_events[j][i]
 
+# count decision trades with regard to threshold: 50 +- offset (%)
+offset = 10
+all_trades = 0
+profit_trades = 0
+for i in range(decisions.__len__()):
+    decision = decisions[i]
+    if decision < 50 < decision + offset or decision > 50 > decision - offset:
+        continue
+    all_trades += 1
+    if events[i] < 0 and decision < 50 or events[i] > 0 and decision > 50:
+        profit_trades += 1
+
+
 # visualise results
 print(decisions)
-print(users)
+print("All trades count = " + str(all_trades))
+print("Successful trades count = " + str(profit_trades))
